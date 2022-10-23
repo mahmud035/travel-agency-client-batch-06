@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { logIn } = useContext(AuthContext);
@@ -21,7 +21,6 @@ const Login = () => {
 
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
 
     logIn(email, password)
       .then((result) => {
@@ -38,7 +37,7 @@ const Login = () => {
   };
 
   return (
-    <div className="pt-5">
+    <div className="pt-5 container ">
       <Form
         onSubmit={handleSubmit}
         className="w-50 mx-auto d-flex flex-column pt-5 shadow p-4 rounded"
@@ -69,6 +68,12 @@ const Login = () => {
           Login
         </Button>
       </Form>
+
+      <p className="text-center pt-2">
+        <small>
+          Don't have an account? <Link to="/sign-up">Create an account</Link>
+        </small>
+      </p>
     </div>
   );
 };

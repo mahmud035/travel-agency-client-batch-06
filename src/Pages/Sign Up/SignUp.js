@@ -4,9 +4,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { FcGoogle } from 'react-icons/fc';
+import { BsFacebook, BsGithub } from 'react-icons/bs';
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, googleSignIn } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +24,19 @@ const SignUp = () => {
     console.log(firstName, lastName, email, password, confirmPassword);
 
     createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success('Account Created Successfully');
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(error.message);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
       .then((result) => {
         const user = result.user;
         console.log(user);
@@ -89,6 +106,34 @@ const SignUp = () => {
           Sign Up
         </Button>
       </Form>
+
+      <p className="text-center pt-2">
+        <small>
+          Already have an account? <Link to="/login">Login</Link>
+        </small>
+      </p>
+
+      <div className="text-center ">Or</div>
+      <div className="text-center pt-2">
+        <ButtonGroup vertical>
+          <Button
+            onClick={handleGoogleSignIn}
+            className="mb-3 rounded ps-0"
+            variant="outline-primary"
+          >
+            <FcGoogle size={20} className="me-3 mb-1 " />
+            <span>Continue with Google</span>
+          </Button>
+          <Button className="mb-3 rounded ps-3" variant="outline-info">
+            <BsFacebook size={20} className="me-3 mb-1" />
+            <span>Continue with Facebook</span>
+          </Button>
+          <Button className=" rounded ps-0" variant="outline-dark">
+            <BsGithub size={20} className="me-3 mb-1" />
+            <span>Continue with Github</span>
+          </Button>
+        </ButtonGroup>
+      </div>
     </div>
   );
 };
