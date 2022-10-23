@@ -3,24 +3,33 @@ import './Header.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { NavLink } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 const Header = () => {
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Traveler</Navbar.Brand>
+          <NavLink to="/" className="navbar-brand">
+            Traveler
+          </NavLink>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav className="mx-auto nav-items">
+              <NavLink
+                to="/home"
+                className={({ isActive }) => (isActive ? 'active' : undefined)}
+              >
+                Home
+              </NavLink>
+              <NavLink to="/trip">Trip</NavLink>
+              <NavLink to="/category">Category</NavLink>
+              <NavLink to="/gallery">Gallery</NavLink>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">More deets</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                Dank memes
-              </Nav.Link>
+              <Button variant="success">Login</Button> &nbsp;
+              <Button variant="info">Sign up</Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
