@@ -3,7 +3,7 @@ import './Header.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 const Header = () => {
@@ -28,8 +28,13 @@ const Header = () => {
               <NavLink to="/gallery">Gallery</NavLink>
             </Nav>
             <Nav>
-              <Button variant="success">Login</Button> &nbsp;
-              <Button variant="info">Sign up</Button>
+              <Link to="/login">
+                <Button variant="success">Login</Button>
+              </Link>
+              &nbsp;
+              <Link to="/sign-up">
+                <Button variant="info">Sign up</Button>
+              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
