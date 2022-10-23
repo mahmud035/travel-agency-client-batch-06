@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './SignUp.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
+  const { createUser } = useContext(AuthContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -14,6 +18,17 @@ const SignUp = () => {
     const password = form.password.value;
     const confirmPassword = form.confirm.value;
     console.log(firstName, lastName, email, password, confirmPassword);
+
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success('Account Created Successfully');
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(error.message);
+      });
   };
 
   return (
@@ -36,7 +51,12 @@ const SignUp = () => {
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email </Form.Label>
-          <Form.Control type="email" name="email" placeholder="Enter email" />
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 
@@ -46,6 +66,7 @@ const SignUp = () => {
             type="password"
             name="password"
             placeholder="Password"
+            required
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
@@ -56,6 +77,7 @@ const SignUp = () => {
             type="password"
             name="confirm"
             placeholder="Confirm Password"
+            required
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
